@@ -421,6 +421,7 @@ int main()
     int input [1][2] ;
     char color = 'B' ;
     string player = "Black" ;
+    int coinB=30 , coinW=30 ;
     char start ;
     int nobat = 1 ;
     for(int i=0 ; i<8 ; i++)
@@ -432,20 +433,30 @@ int main()
         space [3][4] = 'B' ;
         space [4][3] = 'B' ;
     }
-//    cout << "if you want a new game type (y) or if you want resume last game type (n):" ;
-//    cin >> start ;
-//    if (start=='y')
-//    {
+    char a[70];
+    cout << "if you want a new game type (y) or if you want resume last game type (n):" ;
+    cin >> start ;
 
+    // read file :
+    if (start=='y')
+    {
+        ifstream myfile("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ last game.txt");
+        if (!myfile)
+            cout << "File Could not be open !" << endl ;
+        myfile >> a ;
+        for (int i=0 ; i<8 ; i++)
+            for (int j =0 ;j<8 ; j++)
+                space[i][j]=a[i*8 + j];
+        coinB = a[64];
+        coinW = a[65];
+        nobat = a[66];
 
-
-
-//    }
-//    else if (start!='n' && start!='y')
-//    {
-//        cout << "pleas type (y) or (n)!" ;
-//    }
-
+    }
+    else if (start!='n' && start!='y')
+    {
+        cout << "pleas type (y) or (n)!" ;
+    }
+    cout << endl ;
     print(space) ;
     while (coinsnum('B',space)+coinsnum('W',space)<65)
     {
@@ -453,11 +464,13 @@ int main()
         {
             color = 'W' ;
             player = "White" ;
+            coinW--;
         }
         if (nobat%2!=0)
         {
             color = 'B' ;
             player = "Black" ;
+            coinB--;
         }
         int numseg = positionn(color,space,place) ;
         if(place[0]==99 && place[1]==99)
@@ -523,9 +536,8 @@ int main()
         for (int i=0 ; i<8 ; i++)
             for (int j=0; j<8 ; j++)
                 myfile << space[i][j];
-        myfile << endl ;
-        myfile << coinsnum('B',space) << endl ;
-        myfile << coinsnum('W',space) << endl ;
+        myfile << coinB ;
+        myfile << coinW ;
         myfile << nobat ;
         myfile.close();
 

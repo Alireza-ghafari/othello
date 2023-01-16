@@ -257,192 +257,129 @@ int positionn(char color , char arr[8][8] , int place[65])
     return x;
 }
 
+
 // change coins :
-void changecoins(int inputarr[1][2], char spacearr[8][8] , char color )
+int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
 {
-    inputarr[0][0]--;
-    inputarr[0][1]--;
+    int r=0;
 
     // right :
-    for (int i = 1 ; i < 15 ; i++)  // check it
-        if(spacearr[inputarr[0][0]][inputarr[0][1]+i]==color || spacearr[inputarr[0][0]][inputarr[0][1]+i]==45)
-            break;
-        else if(spacearr[inputarr[0][0]][inputarr[0][1]+i]!=color && spacearr[inputarr[0][0]][inputarr[0][1]+i]!=45)
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            for (int l=2 ; l<15 ; l++)
-            {
-                if (spacearr[inputarr[0][0]][inputarr[0][1]+l]==color)
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == color )
+                for ( int y = 0 ; y < x ; y++ )
                 {
-                    if(spacearr[inputarr[0][0]][inputarr[0][1]+i]=='W')
-                        spacearr[inputarr[0][0]][inputarr[0][1]+i]='B';
-                    else if(spacearr[inputarr[0][0]][inputarr[0][1]+i]=='B')
-                        spacearr[inputarr[0][0]][inputarr[0][1]+i]='W';
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]] = color ;
+                    r=9;
                 }
-                else
-                    continue;
-            }
         }
 
     // left :
-    for (int i = 1 ; i < 15 ; i++)  // check it
-        if(spacearr[inputarr[0][0]][inputarr[0][1]-i]==color || spacearr[inputarr[0][0]][inputarr[0][1]-i]==45)
-            break;
-        else if(spacearr[inputarr[0][0]][inputarr[0][1]-i]!=color && spacearr[inputarr[0][0]][inputarr[0][1]-i]!=45)
+    if( spacearr[inputarr[0][0]-1][inputarr[0][1]] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            for (int l=2 ; l<15 ; l++)
-                if (spacearr[inputarr[0][0]][inputarr[0][1]-l]==color)
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == color )
+                for ( int y = 0 ; y < x ; y++ )
                 {
-                    if(spacearr[inputarr[0][0]][inputarr[0][1]-i]=='W')
-                        spacearr[inputarr[0][0]][inputarr[0][1]-i]='B';
-                    else if(spacearr[inputarr[0][0]][inputarr[0][1]-i]=='B')
-                        spacearr[inputarr[0][0]][inputarr[0][1]-i]='W';
+                    spacearr[inputarr[0][0]-y][inputarr[0][1]] = color ;
+                    r=9;
                 }
-                else
-                    continue;
         }
 
-    // top :
-    for (int i = 1 ; i < 15 ; i++)  // check it
-        if(spacearr[inputarr[0][0]+i][inputarr[0][1]]==color || spacearr[inputarr[0][0]+i][inputarr[0][1]]==45)
-            break;
-        else if(spacearr[inputarr[0][0]+i][inputarr[0][1]]!=color && spacearr[inputarr[0][0]+i][inputarr[0][1]]!=45)
+    // up :
+    if ( spacearr[inputarr[0][0]][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]][inputarr[0][1]+1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            for (int l=2 ; l<15 ; l++)
-                if (spacearr[inputarr[0][0]+l][inputarr[0][1]]==color)
+            if ( spacearr[inputarr[0][0]][inputarr[0][1]+x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]][inputarr[0][1]+x] == color )
+                for ( int y = 0 ; y < x ; y++ )
                 {
-                    if(spacearr[inputarr[0][0]+i][inputarr[0][1]]=='W')
-                        spacearr[inputarr[0][0]+i][inputarr[0][1]]='B';
-                    else if(spacearr[inputarr[0][0]+i][inputarr[0][1]]=='B')
-                        spacearr[inputarr[0][0]+i][inputarr[0][1]]='W';
+                    spacearr[inputarr[0][0]][inputarr[0][1]+y] = color ;
+                    r=9;
                 }
-                else
-                    continue;
         }
 
     // down :
-    for (int i = 1 ; i < 15 ; i++)  // check it
-        if(spacearr[inputarr[0][0]-i][inputarr[0][1]]==color || spacearr[inputarr[0][0]-i][inputarr[0][1]]==45)
-            break;
-        else if(spacearr[inputarr[0][0]-i][inputarr[0][1]]!=color && spacearr[inputarr[0][0]-i][inputarr[0][1]]!=45)
+    if ( spacearr[inputarr[0][0]][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]][inputarr[0][1]-1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            for (int l=2 ; l<15 ; l++)
-                if (spacearr[inputarr[0][0]-l][inputarr[0][1]]==color)
+            if ( spacearr[inputarr[0][0]][inputarr[0][1]-x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]][inputarr[0][1]-x] == color )
+                for ( int y = 0 ; y < x ; y++ )
                 {
-                    if(spacearr[inputarr[0][0]-i][inputarr[0][1]]=='W')
-                        spacearr[inputarr[0][0]-i][inputarr[0][1]]='B';
-                    else if(spacearr[inputarr[0][0]-i][inputarr[0][1]]=='B')
-                        spacearr[inputarr[0][0]-i][inputarr[0][1]]='W';
+                    spacearr[inputarr[0][0]][inputarr[0][1]-y] = color ;
+                    r=9;
                 }
-                else
-                    continue;
         }
 
-    // top - right :
-    int k = 0 ;
-    for (int i = 1 ; i < 20 ; i++)  // check it
-        if(spacearr[inputarr[0][0]+i][inputarr[0][1]-i]==color || spacearr[inputarr[0][0]+i][inputarr[0][1]-i]==45)
+    // up - right :
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            k++;
-            break;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]+y] = color ;
+                    r=9;
+                }
         }
 
-        else if(spacearr[inputarr[0][0]+i][inputarr[0][1]-i]!=color && spacearr[inputarr[0][0]+i][inputarr[0][1]-i]!=45)
+    // up - left :
+    if ( spacearr[inputarr[0][0]-1][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]+1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            if (k<2)
-            {
-                for (int l=2 ; l < 20 ; l++)
-                    if (spacearr[inputarr[0][0]+l][inputarr[0][1]-l]==color)
-                    {
-                        if(spacearr[inputarr[0][0]+i][inputarr[0][1]-i]=='W')
-                            spacearr[inputarr[0][0]+i][inputarr[0][1]-i]='B';
-                        else if(spacearr[inputarr[0][0]+i][inputarr[0][1]-i]=='B')
-                            spacearr[inputarr[0][0]+i][inputarr[0][1]-i]='W';
-                    }
-                    else
-                        continue;
-            }
-        }
-
-    // top - left :
-    k = 0 ;
-    for (int i = 1 ; i < 20 ; i++)  // check it
-        if(spacearr[inputarr[0][0]+i][inputarr[0][1]+i]==color || spacearr[inputarr[0][0]+i][inputarr[0][1]+i]==45)
-        {
-            k++;
-            break;
-        }
-
-        else if(spacearr[inputarr[0][0]+i][inputarr[0][1]+i]!=color && spacearr[inputarr[0][0]+i][inputarr[0][1]+i]!=45)
-        {
-            if (k<2)
-            {
-                for (int l=2 ; l < 20 ; l++)
-                    if (spacearr[inputarr[0][0]+l][inputarr[0][1]+l]==color)
-                    {
-                        if(spacearr[inputarr[0][0]+i][inputarr[0][1]+i]=='W')
-                            spacearr[inputarr[0][0]+i][inputarr[0][1]+i]='B';
-                        else if(spacearr[inputarr[0][0]+i][inputarr[0][1]+i]=='B')
-                            spacearr[inputarr[0][0]+i][inputarr[0][1]+i]='W';
-                    }
-                    else
-                        continue;
-            }
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]+x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]+x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]-y][inputarr[0][1]+y] = color ;
+                    r=9;
+                }
         }
 
     // down - right :
-    k = 0 ;
-    for (int i = 1 ; i < 20 ; i++)  // check it
-        if(spacearr[inputarr[0][0]-i][inputarr[0][1]+i]==color || spacearr[inputarr[0][0]-i][inputarr[0][1]+i]==45)
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            k++;
-            break;
-        }
-
-        else if(spacearr[inputarr[0][0]-i][inputarr[0][1]+i]!=color && spacearr[inputarr[0][0]-i][inputarr[0][1]+i]!=45)
-        {
-            if (k<2)
-            {
-                for (int l=2 ; l < 20 ; l++)
-                    if (spacearr[inputarr[0][0]-l][inputarr[0][1]+l]==color)
-                    {
-                        if(spacearr[inputarr[0][0]-i][inputarr[0][1]+i]=='W')
-                            spacearr[inputarr[0][0]-i][inputarr[0][1]+i]='B';
-                        else if(spacearr[inputarr[0][0]-i][inputarr[0][1]+i]=='B')
-                            spacearr[inputarr[0][0]-i][inputarr[0][1]+i]='W';
-                    }
-                    else
-                        continue;
-            }
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]-y] = color ;
+                    r=9;
+                }
         }
 
     // down - left :
-    k = 0 ;
-    for (int i = 1 ; i < 20 ; i++)  // check it
-        if(spacearr[inputarr[0][0]-i][inputarr[0][1]-i]==color || spacearr[inputarr[0][0]-i][inputarr[0][1]-i]==45)
+    if( spacearr[inputarr[0][0]-1][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]-1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
         {
-            k++;
-            break;
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]-x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]-x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]-y][inputarr[0][1]-y] = color ;
+                    r=9;
+                }
         }
 
-        else if(spacearr[inputarr[0][0]-i][inputarr[0][1]-i]!=color && spacearr[inputarr[0][0]-i][inputarr[0][1]-i]!=45)
-        {
-            if (k<2)
-            {
-                for (int l=2 ; l < 20 ; l++)
-                    if (spacearr[inputarr[0][0]-l][inputarr[0][1]-l]==color)
-                    {
-                        if(spacearr[inputarr[0][0]-i][inputarr[0][1]-i]=='W')
-                            spacearr[inputarr[0][0]-i][inputarr[0][1]-i]='B';
-                        else if(spacearr[inputarr[0][0]-i][inputarr[0][1]-i]=='B')
-                            spacearr[inputarr[0][0]-i][inputarr[0][1]-i]='W';
-                    }
-                    else
-                        continue;
-            }
-        }
 
+    return r ;
 
 }
+
 
 // coins number :
 int coinsnum (char color , char spacearr[8][8])

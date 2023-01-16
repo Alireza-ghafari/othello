@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 // print game :
@@ -259,39 +261,12 @@ int positionn(char color , char arr[8][8] , int place[65])
 
 
 // change coins :
-int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
+void changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
 {
-    int r=0;
+    inputarr[0][0]-- ;
+    inputarr[0][1]-- ;
 
     // right :
-    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]] != '-' )
-        for ( int x = 2 ; x < 8 ; x++ )
-        {
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == '-' )
-                break ;
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == color )
-                for ( int y = 0 ; y < x ; y++ )
-                {
-                    spacearr[inputarr[0][0]+y][inputarr[0][1]] = color ;
-                    r=9;
-                }
-        }
-
-    // left :
-    if( spacearr[inputarr[0][0]-1][inputarr[0][1]] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]] != '-' )
-        for ( int x = 2 ; x < 8 ; x++ )
-        {
-            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == '-' )
-                break ;
-            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == color )
-                for ( int y = 0 ; y < x ; y++ )
-                {
-                    spacearr[inputarr[0][0]-y][inputarr[0][1]] = color ;
-                    r=9;
-                }
-        }
-
-    // up :
     if ( spacearr[inputarr[0][0]][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]][inputarr[0][1]+1] != '-' )
         for ( int x = 2 ; x < 8 ; x++ )
         {
@@ -301,11 +276,10 @@ int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
                 for ( int y = 0 ; y < x ; y++ )
                 {
                     spacearr[inputarr[0][0]][inputarr[0][1]+y] = color ;
-                    r=9;
                 }
         }
 
-    // down :
+    // left :
     if ( spacearr[inputarr[0][0]][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]][inputarr[0][1]-1] != '-' )
         for ( int x = 2 ; x < 8 ; x++ )
         {
@@ -315,25 +289,36 @@ int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
                 for ( int y = 0 ; y < x ; y++ )
                 {
                     spacearr[inputarr[0][0]][inputarr[0][1]-y] = color ;
-                    r=9;
+                }
+        }
+
+    // up :
+    if( spacearr[inputarr[0][0]-1][inputarr[0][1]] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
+        {
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]-x][inputarr[0][1]] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]-y][inputarr[0][1]] = color ;
+                }
+        }
+
+    // down :
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
+        {
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]] = color ;
                 }
         }
 
     // up - right :
-    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != '-' )
-        for ( int x = 2 ; x < 8 ; x++ )
-        {
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == '-' )
-                break ;
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == color )
-                for ( int y = 0 ; y < x ; y++ )
-                {
-                    spacearr[inputarr[0][0]+y][inputarr[0][1]+y] = color ;
-                    r=9;
-                }
-        }
-
-    // up - left :
     if ( spacearr[inputarr[0][0]-1][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]+1] != '-' )
         for ( int x = 2 ; x < 8 ; x++ )
         {
@@ -343,25 +328,10 @@ int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
                 for ( int y = 0 ; y < x ; y++ )
                 {
                     spacearr[inputarr[0][0]-y][inputarr[0][1]+y] = color ;
-                    r=9;
                 }
         }
 
-    // down - right :
-    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != '-' )
-        for ( int x = 2 ; x < 8 ; x++ )
-        {
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == '-' )
-                break ;
-            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == color )
-                for ( int y = 0 ; y < x ; y++ )
-                {
-                    spacearr[inputarr[0][0]+y][inputarr[0][1]-y] = color ;
-                    r=9;
-                }
-        }
-
-    // down - left :
+    // up - left :
     if( spacearr[inputarr[0][0]-1][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]-1][inputarr[0][1]-1] != '-' )
         for ( int x = 2 ; x < 8 ; x++ )
         {
@@ -371,12 +341,34 @@ int changecoins(int inputarr[1][2] ,char spacearr [8][8] ,char color)
                 for ( int y = 0 ; y < x ; y++ )
                 {
                     spacearr[inputarr[0][0]-y][inputarr[0][1]-y] = color ;
-                    r=9;
                 }
         }
 
+    // down - right :
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]+1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
+        {
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]+x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]+y] = color ;
+                }
+        }
 
-    return r ;
+    // down - left :
+    if ( spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != color && spacearr[inputarr[0][0]+1][inputarr[0][1]-1] != '-' )
+        for ( int x = 2 ; x < 8 ; x++ )
+        {
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == '-' )
+                break ;
+            if ( spacearr[inputarr[0][0]+x][inputarr[0][1]-x] == color )
+                for ( int y = 0 ; y < x ; y++ )
+                {
+                    spacearr[inputarr[0][0]+y][inputarr[0][1]-y] = color ;
+                }
+        }
 
 }
 
@@ -422,12 +414,14 @@ int main()
 {
     char space[8][8] ;
     int x , y ;
+    fstream myfile;
     // save place in arr :
     int place [65] ;
     // cin place :
     int input [1][2] ;
     char color = 'B' ;
     string player = "Black" ;
+    char start ;
     int nobat = 1 ;
     for(int i=0 ; i<8 ; i++)
     {
@@ -438,6 +432,20 @@ int main()
         space [3][4] = 'B' ;
         space [4][3] = 'B' ;
     }
+//    cout << "if you want a new game type (y) or if you want resume last game type (n):" ;
+//    cin >> start ;
+//    if (start=='y')
+//    {
+
+
+
+
+//    }
+//    else if (start!='n' && start!='y')
+//    {
+//        cout << "pleas type (y) or (n)!" ;
+//    }
+
     print(space) ;
     while (coinsnum('B',space)+coinsnum('W',space)<65)
     {
@@ -508,6 +516,31 @@ int main()
             nobat++ ;
         }
 
+        // save game :
+        ofstream myfile("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ last game.txt");
+        if (!myfile)
+            cout << "File Could not be open !" << endl ;
+        for (int i=0 ; i<8 ; i++)
+            for (int j=0; j<8 ; j++)
+                myfile << space[i][j];
+        myfile << endl ;
+        myfile << coinsnum('B',space) << endl ;
+        myfile << coinsnum('W',space) << endl ;
+        myfile << nobat ;
+        myfile.close();
+
     }
+
+    // winner :
+    if (coinsnum('B',space) > coinsnum('W',space))
+    {
+        cout << "Black wins!" ;
+    }
+
+    if (coinsnum('B',space) < coinsnum('W',space))
+    {
+        cout << "White wins!" ;
+    }
+
     return 0 ;
 }

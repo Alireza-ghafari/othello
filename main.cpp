@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -578,6 +579,89 @@ int main()
     if (coinsnum('B',space) < coinsnum('W',space))
     {
         cout << "\nWhite wins!\n" ;
+    }
+
+
+    // save 10 game :
+    int count =0;
+    ifstream counter ("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ count.txt");
+    counter >> count ;
+    count ++;
+    ofstream counters ("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ count.txt");
+    counters << count ;
+
+
+    fstream result;
+    result.open("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ othello-result.txt" , ios::app);
+    if(coinsnum('B',space)>coinsnum('W',space))
+    {
+        cout <<"player1(black) wins" <<endl;
+        result<<"player1(black) wins : " << coinsnum('B',space) << " - vs - " << coinsnum('W',space) << " : player2(white)" << endl;
+    }
+
+    if(coinsnum('B',space)<coinsnum('W',space))
+    {
+        cout <<"player2(white) wins" <<endl;
+        result<<"player2(white) wins : " << coinsnum('W',space) << " - vs - " << coinsnum('B',space) << " : player1(black)" << endl;
+        result.close();
+    }
+    if(count>10)
+    {
+        string filename;
+        int line_number;
+
+        filename = "E:\\daneshgah\\Mabani\\othello-p1\\othello\\ othello-result.txt";
+
+        line_number =1;
+        fstream read_file;
+
+        read_file.open(filename);
+
+        if (read_file.fail())
+        {
+            cout << "Error opening file." << endl;
+
+            return 1;
+        }
+
+        vector<string> lines;
+        string line;
+
+        while (getline(read_file, line))
+            lines.push_back(line);
+
+        read_file.close();
+
+        if (line_number > lines.size())
+        {
+            cout << "Line " << line_number;
+            cout << " not in file." << endl;
+
+            cout << "File has " << lines.size();
+            cout << " lines." << endl;
+
+            return 1;
+        }
+
+        ofstream write_file;
+
+        write_file.open(filename);
+
+        if (write_file.fail())
+        {
+            cout << "Error opening file." << endl;
+            return 1;
+        }
+
+        line_number--;
+
+        for (int i = 0; i < lines.size(); i++)
+            if (i != line_number)
+                write_file << lines[i] << endl;
+
+        write_file.close();
+
+
     }
 
     return 0 ;

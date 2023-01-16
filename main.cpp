@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <bits/stdc++.h>
+
 using namespace std;
 
 // print game :
@@ -434,10 +436,12 @@ int main()
         space [4][3] = 'B' ;
     }
     char a[70];
+    string line ;
     cout << "if you want a new game type (y) or if you want resume last game type (n):" ;
     cin >> start ;
 
     // read file :
+    int linenum =1;
     if (start=='y')
     {
         ifstream myfile("E:\\daneshgah\\Mabani\\othello-p1\\othello\\ last game.txt");
@@ -447,9 +451,19 @@ int main()
         for (int i=0 ; i<8 ; i++)
             for (int j =0 ;j<8 ; j++)
                 space[i][j]=a[i*8 + j];
-        coinB = a[64];
-        coinW = a[65];
-        nobat = a[66];
+        while(getline(myfile,line))
+        {
+            if (linenum==1)
+                strcpy(a, line.c_str());
+            if (linenum==2)
+                coinB = stoi(line);
+            if (linenum==3)
+                coinW = stoi(line);
+            if (linenum==4)
+                nobat = stoi(line);
+            linenum++;
+        }
+        myfile.close();
 
     }
     else if (start!='n' && start!='y')
@@ -458,7 +472,7 @@ int main()
     }
     cout << endl ;
     print(space) ;
-    while (coinsnum('B',space)+coinsnum('W',space)<65)
+    while (coinB+coinW>0)
     {
         if (nobat%2==0)
         {
@@ -485,8 +499,20 @@ int main()
                 color='B';
                 nobat++;
             }
-
         }
+
+        if (coinB<0)
+        {
+            color='W';
+            nobat++;
+        }
+
+        if (coinW<0)
+        {
+            color='B';
+            nobat++;
+        }
+
         cout << "Coins on board for Player-Black: " << coinsnum('B',space) << endl ;
         cout << "Coins on board for Player-White: " << coinsnum('W',space) << endl ;
         cout << endl ;
@@ -536,22 +562,22 @@ int main()
         for (int i=0 ; i<8 ; i++)
             for (int j=0; j<8 ; j++)
                 myfile << space[i][j];
-        myfile << coinB ;
-        myfile << coinW ;
+        myfile << endl ;
+        myfile << coinB << endl ;
+        myfile << coinW << endl ;
         myfile << nobat ;
         myfile.close();
-
     }
 
     // winner :
     if (coinsnum('B',space) > coinsnum('W',space))
     {
-        cout << "Black wins!" ;
+        cout << "\nBlack wins!\n" ;
     }
 
     if (coinsnum('B',space) < coinsnum('W',space))
     {
-        cout << "White wins!" ;
+        cout << "\nWhite wins!\n" ;
     }
 
     return 0 ;
